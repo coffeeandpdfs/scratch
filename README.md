@@ -1,2 +1,2 @@
-# scratch
-Scratch projects
+# Scratch
+Small projects or scratch applications.
