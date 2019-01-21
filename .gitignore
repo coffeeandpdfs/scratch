@@ -1,6 +1,8 @@
 # Additional Files to ignore
 .idea
 .vscode
+.sqlite
+.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
