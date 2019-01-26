@@ -108,3 +108,5 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/Weather/weather.sqlite
+/weather.sqlite
