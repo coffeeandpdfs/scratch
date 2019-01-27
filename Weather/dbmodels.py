@@ -62,7 +62,10 @@ Python Classes to be unpacked into database objects
 """
 @dataclass
 class insert_city:
-    
+    """
+    Create an instance of a city.  Can be unpacked into a City database object.
+    Input: A JSON dictionary of a weather API call
+    """
     def __init__(self, weather_dict):
         self.city_name = weather_dict['name']
         self.id = weather_dict['id']
@@ -72,7 +75,10 @@ class insert_city:
     
 @dataclass
 class insert_weather_event:
-    
+    """
+    Create an instance of a weather event.
+    Input: A JSON dictionary of a weather API call
+    """
     def __init__(self, weather_dict):
         self.dt = weather_dict.get('dt')
         self.city_id = weather_dict.get('id')

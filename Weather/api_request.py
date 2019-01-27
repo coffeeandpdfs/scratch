@@ -1,11 +1,14 @@
 import os
 import requests
 import datetime
-from weather_models import City, WeatherAttributes, insert_city, insert_weather_event
+from dbmodels import City, WeatherAttributes, insert_city, insert_weather_event
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
+"""
+Perform a get request to the weather API, 
+then load the results in the database
+"""
 def main():
     # Load API key and City_ID from environment variables
     weather_database = f"{os.path.abspath('.')}\weather.sqlite"
