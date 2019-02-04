@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Home - Amortization{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    Amortization Calculator
+</div>
+
+
+{{wtf.quick_form(form)}}
+{{ data | safe}}
+
+
+{% endblock %}
+
