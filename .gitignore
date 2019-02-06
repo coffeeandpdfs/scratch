@@ -3,6 +3,7 @@
 .vscode
 .sqlite
 .db
+.vagrant
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
