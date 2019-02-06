@@ -20,3 +20,4 @@ SQLAlchemy
 visitor
 Werkzeug
 WTForms
+pandas
