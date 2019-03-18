@@ -11,14 +11,15 @@ from collections import OrderedDict
 
 
 def amortize(initial_loan, interest_rate, years, start_date=date.today(),
-             payments_per_year=12, additional_payment=0):
+             payments_per_year=12, payment=None, additional_payment=0):
 
     period = 1
     beg_balance = initial_loan
     remaining_balance = initial_loan
     total_interest = 0
-    payment = -round(np.pmt(interest_rate / payments_per_year, years *
-                            payments_per_year, beg_balance), 2)
+    if not payment:
+        payment = -round(np.pmt(interest_rate / payments_per_year,
+        years * payments_per_year, beg_balance), 2)
 
     while remaining_balance > 0:
         interest = round(interest_rate / payments_per_year * remaining_balance,

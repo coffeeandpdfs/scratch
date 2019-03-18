@@ -21,14 +21,16 @@ def amortization_page():
         interest_rate = form.annual_interest_rate.data
         years = form.years.data
         #PaymentsPerYear = form.payments_per_year.data
+        payment = form.payment_amount.data
         additional_payment = form.additional_amount.data
         if form.start_date.data:
             start_date = form.start_date.data
         else:
             start_date = date.today()
 
-        a = amortize(loan_amount, interest_rate, years, start_date, additional_payment=additional_payment)
-        df = pd.DataFrame(a).set_index('Period').sort_index(ascending=True)
+        a = amortize(loan_amount, interest_rate, years, start_date, payment=payment, 
+                        additional_payment=additional_payment)
+        df = pd.DataFrame(a).set_index('Period').sort_index(ascending=False)
 
         return render_template('amortization_model.html', form=form, data=df.to_html())
     return render_template('amortization_model.html', form=form)
