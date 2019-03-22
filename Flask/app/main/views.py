@@ -1,10 +1,12 @@
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, request
 from datetime import date, datetime
 from . import main
-from .forms import AmortizationForm
+from .forms import AmortizationForm, BudgetForm, BudgetTable
 import pandas as pd
 import numpy as np
 from ..functions.functions import amortize
+from .. import db
+from ..models import Budget
 
 
 @main.route('/', methods=['GET','POST'])
@@ -36,11 +38,6 @@ def amortization_page():
     return render_template('amortization_model.html', form=form)
 
 
-@main.route('/blog', methods=['GET', 'POST'])
-def blog_posts():
-    # Placeholder for blog
-    pass
-
 @main.route('/budget/', methods=['GET', 'POST'])
 def current_budget():
     # Displays the current budget
@@ -49,22 +46,47 @@ def current_budget():
     # Item2 | $Total | [Modification]
     #                 Submit
     # return render_template('budget.html')
-    pass
+    data = db.session.query(Budget).all()
+    return render_template('budget_view.html', data=data)
 
 
-@main.route('/updatebudget', methods=['GET','POST'])
-def update_budget():
+@main.route('/updatebudget/<int:id>', methods=['GET','POST'])
+def update_budget(id):
     # Displays calculator to post new costs to the budget
     # Item1 | $Total | Remaining | [Modification]
     # Item2 | $Total | Remaining | [Modification]
     #                              Submit
     # return render_template('updatebudget.html')
-    pass
+    budget_item = db.session.query(Budget).filter(Budget.id == id).first()
+    if budget_item:
+        form = BudgetForm(formdata=request.form, obj=budget_item)
+        if request.method == 'POST' and form.validate:
+            save_budget_changes(budget_item, form)
+            return redirect(url_for("main.current_budget"))
+        return render_template('budget_edit.html', form=form)
+    else:
+        return f'Error Loading #{id}'
 
-
-@main.route('/budgetchanges', methods=['GET','POST'])
-def budget_changes():
+#@main.route('/budgetchanges', methods=['GET','POST'])
+def save_budget_changes(budgetitem, form, new=False):
     # Display the previous changes to the budget
     # Display the debits associated with the budget
     # return render_template('budgetchanges.html')
+    budget = Budget()
+    budget.lineitem = form.lineitem.data
+    budget.amount = form.amount.data
+    budget.flexible = form.flexible.data
+    budget.notes = form.notes.data
+
+    if new:
+        db.session.add(budget)
+    else:
+        budget.id = budgetitem.id
+        print(budget.id, budget.lineitem)
+    db.session.commit()
+
+
+@main.route('/blog', methods=['GET', 'POST'])
+def blog_posts():
+    # Placeholder for blog
     pass

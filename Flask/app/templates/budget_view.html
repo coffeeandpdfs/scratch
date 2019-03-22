@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Budget: View{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <p>Let's try a budget page!</p>
+        
+            <table>
+                <thead>
+                    <td>Line Item</td>
+                    <td>Amount</td>
+                    <td>Flexible</td>
+                    <td>Notes</td>
+                </thead>
+                <tbody>
+                    {% for b in data %}
+                    <tr>
+                        <td> {{b.lineitem}} </td>
+                        <td> {{b.amount}} </td>
+                        <td> {{b.flexible}} </td>
+                        <td> {{b.notes}} </td>
+                        <td> <a href="{{ url_for('main.update_budget',id=b.id) }}">Edit</a></td>
+                        <td> <a href="{{ url_for('main.update_budget',id=b.id) }}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+</div>
+
+{% endblock %}

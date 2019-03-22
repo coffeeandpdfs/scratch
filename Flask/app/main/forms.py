@@ -15,5 +15,12 @@ class AmortizationForm(FlaskForm):
     payment_amount = IntegerField("Payment (optional)")
     additional_amount = IntegerField('Additional Payment:', [validators.optional()])
     start_date = DateField('Start Date: (Format: mm-dd-yyyy)', format='%m-%d-%Y')
-    #payments_per_year = IntegerField('Payments per Year:', [validators.required()])
+    submit = SubmitField('Submit')
+
+
+class BudgetForm(FlaskForm):
+    lineitem = StringField('Item Name: ')
+    amount = DecimalField('Amount: ')
+    flexible = StringField('Flexible: ')
+    notes = StringField('Additional Notes: ')
     submit = SubmitField('Submit')
